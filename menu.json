@@ -567,17 +567,20 @@
                 {
                     "name_kr": "산미구엘",
                     "name_en": "San Miguel",
-                    "price": 0.9
+                    "price": 0.8,
+                    "original_price": 0.9
                 },
                 {
                     "name_kr": "에딩거 바이스비어",
                     "name_en": "Erdinger Weissbier",
-                    "price": 1.0
+                    "price": 0.9,
+                    "original_price": 1.0
                 },
                 {
                     "name_kr": "기네스 드래프트",
                     "name_en": "Guinness Draft",
-                    "price": 1.2
+                    "price": 1.0,
+                    "original_price": 1.2
                 }
             ]
         },
