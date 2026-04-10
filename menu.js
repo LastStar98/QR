@@ -6,9 +6,11 @@ const CATS = {
     '칵테일': { icon: '🥃', en: 'COCKTAIL' },
     '과일 칵테일': { icon: '🍹', en: 'FRUITY' },
     '크리미 칵테일': { icon: '🥛', en: 'CREAMY' },
+    '위스키 하이볼': { icon: '🥤', en: 'HIGHBALL' },
     '위스키': { icon: '🥃', en: 'WHISKEY' },
     '데킬라': { icon: '🌵', en: 'TEQUILA' },
-    '브랜디': { icon: '🍷', en: 'BRANDY' },
+    '브랜디': { icon: '🍇', en: 'BRANDY' },
+    '와인': { icon: '🍷', en: 'WINE' },
     '맥주': { icon: '🍺', en: 'BEER' },
     '논알콜': { icon: '🫧', en: 'NON-ALCH' },
 };
@@ -97,6 +99,15 @@ function renderMenu(data) {
                 ? `<div class="item-note">${item.note}</div>`
                 : '';
 
+            // Ingredients + ABV (칵테일 재료/도수)
+            let ingredientsHtml = '';
+            if (item.ingredients || item.abv) {
+                const ing = item.ingredients || '';
+                const sep = item.ingredients && item.abv ? ' · ' : '';
+                const abv = item.abv ? `<span class="abv">${item.abv}</span>` : '';
+                ingredientsHtml = `<div class="item-ingredients">${ing}${sep}${abv}</div>`;
+            }
+
             // Price 블록: 할인 / 보틀 가격 지원
             let priceHtml = '';
             if (item.original_price && item.original_price > item.price) {
@@ -125,6 +136,7 @@ function renderMenu(data) {
         <div class="item-info">
           <div class="item-name-kr">${item.name_kr}</div>
           <div class="item-name-en">${item.name_en}</div>
+          ${ingredientsHtml}
           ${noteHtml}
         </div>
         <div class="item-leader">

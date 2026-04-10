@@ -616,6 +616,24 @@ body {
     font-size: 10px;
 }
 
+/* ── Item ingredients (칵테일 재료 / 도수) ── */
+.item-ingredients {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 10.5px;
+    font-weight: 300;
+    color: var(--text-muted);
+    letter-spacing: 0.01em;
+    margin-top: 3px;
+    line-height: 1.35;
+}
+
+.item-ingredients .abv {
+    color: var(--gold-dim);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    margin-left: 1px;
+}
+
 /* ── Item note (태그라인 / 설명) ── */
 .item-note {
     font-family: 'Noto Sans KR', sans-serif;
