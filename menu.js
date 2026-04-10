@@ -6,6 +6,9 @@ const CATS = {
     '칵테일': { icon: '🥃', en: 'COCKTAIL' },
     '과일 칵테일': { icon: '🍹', en: 'FRUITY' },
     '크리미 칵테일': { icon: '🥛', en: 'CREAMY' },
+    '위스키': { icon: '🥃', en: 'WHISKEY' },
+    '데킬라': { icon: '🌵', en: 'TEQUILA' },
+    '브랜디': { icon: '🍷', en: 'BRANDY' },
     '맥주': { icon: '🍺', en: 'BEER' },
     '논알콜': { icon: '🫧', en: 'NON-ALCH' },
 };
@@ -88,17 +91,47 @@ function renderMenu(data) {
         cat.items.forEach((item) => {
             const el = document.createElement('article');
             el.className = 'menu-item';
+
+            // Note (설명/태그라인)
+            const noteHtml = item.note
+                ? `<div class="item-note">${item.note}</div>`
+                : '';
+
+            // Price 블록: 할인 / 보틀 가격 지원
+            let priceHtml = '';
+            if (item.original_price && item.original_price > item.price) {
+                // 할인 표시: 원가 취소선 + 할인가
+                el.classList.add('is-sale');
+                priceHtml = `
+          <div class="price-original">${formatPrice(item.original_price)}</div>
+          <div class="price-amount">${formatPrice(item.price)}</div>
+          <div class="price-unit">won</div>
+        `;
+            } else if (item.bottle_price) {
+                // 글라스 / 보틀 가격
+                priceHtml = `
+          <div class="price-amount">${formatPrice(item.price)}</div>
+          <div class="price-bottle">${formatPrice(item.bottle_price)}</div>
+          <div class="price-unit">glass / bottle</div>
+        `;
+            } else {
+                priceHtml = `
+          <div class="price-amount">${formatPrice(item.price)}</div>
+          <div class="price-unit">won</div>
+        `;
+            }
+
             el.innerHTML = `
         <div class="item-info">
           <div class="item-name-kr">${item.name_kr}</div>
           <div class="item-name-en">${item.name_en}</div>
+          ${noteHtml}
         </div>
         <div class="item-leader">
           <span></span><span></span><span></span><span></span><span></span>
         </div>
         <div class="item-price">
-          <div class="price-amount">${formatPrice(item.price)}</div>
-          <div class="price-unit">won</div>
+          ${priceHtml}
         </div>
       `;
             list.appendChild(el);
