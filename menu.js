@@ -2,6 +2,7 @@
 
 const CATS = {
     '사이드 디쉬': { icon: '🍽', en: 'SIDE DISH' },
+    '8월 한정 메뉴': { icon: '🌻', en: 'AUGUST LIMITED' },
     '클래식 칵테일': { icon: '🍸', en: 'CLASSIC' },
     '칵테일': { icon: '🥃', en: 'COCKTAIL' },
     '과일 칵테일': { icon: '🍹', en: 'FRUITY' },
@@ -110,7 +111,22 @@ function renderMenu(data) {
 
             // Price 블록: 할인 / 보틀 가격 지원
             let priceHtml = '';
-            if (item.original_price && item.original_price > item.price) {
+            if (item.price_options?.length) {
+                priceHtml = `
+          <div class="price-amount">${item.price_options.map(formatPrice).join(' / ')}</div>
+          <div class="price-unit">won</div>
+        `;
+            } else if (item.price_range?.length === 2) {
+                priceHtml = `
+          <div class="price-amount">${formatPrice(item.price_range[0])}–${formatPrice(item.price_range[1])}</div>
+          <div class="price-unit">won</div>
+        `;
+            } else if (item.price_from) {
+                priceHtml = `
+          <div class="price-amount">${formatPrice(item.price_from)}~</div>
+          <div class="price-unit">won</div>
+        `;
+            } else if (item.original_price && item.original_price > item.price) {
                 // 할인 표시: 원가 취소선 + 할인가
                 el.classList.add('is-sale');
                 priceHtml = `
